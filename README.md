@@ -72,9 +72,10 @@ videoDuration.analyze(videoUrl)
     console.error(error);
   });
 
-// Using a local video file (Node.js)
-const localVideoPath = "path/to/local/video.mp4";
-videoDuration.analyze(localVideoPath)
+// Using a file object
+// videoFileInput File input 
+const file = videoFileInput.files[0];
+videoDuration.analyze(file)
   .then(duration => {
     console.log(`Video duration: `, duration);
   })
