@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Video Duration</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Video Duration Calculator</h1>
+        <div class="input-section">
+            <input type="file" id="videoFile" accept="video/*">
+            <input type="url" id="videoURL" placeholder="Enter Video URL">
+        </div>
+        <button id="getDurationButton">Get Durations</button>
+        <div id="output" class="output-container">
+            <pre id="result"></pre>
+        </div>
+    </div>
+    <script src="../dist/index.min.js"></script>
+    <script>
+
+        // Analyzer class
+        const videoDuration = new VideoDuration();
+
+        function displayResult(result) {
+            const outputDiv = document.getElementById('output');
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            const durationInMilliseconds = result.ms;
+            const durationInSeconds = result.seconds;
+            const durationString = `${Math.floor(durationInSeconds / 60)}:${String(Math.floor(durationInSeconds) % 60).padStart(2, '0')}`;
+
+            const resultHTML = `<p><strong>Duration in milliseconds:</strong> ${durationInMilliseconds} ms</p><p><strong>Duration in seconds:</strong> ${durationInSeconds} seconds</p><p><strong>Duration in minutes:seconds format:</strong> ${durationString}</p>`;
+
+            resultDiv.innerHTML = resultHTML;
+            outputDiv.style.display = 'block';
+        }
+
+        document.getElementById('getDurationButton').addEventListener('click', async () => {
+            const videoFileInput = document.getElementById('videoFile');
+            const videoURLInput = document.getElementById('videoURL');
+            const outputDiv = document.getElementById('output');
+            outputDiv.style.display = 'none';
+
+            if (videoFileInput.files.length > 0) {
+                const file = videoFileInput.files[0];
+                try {
+                    const result = await videoDuration.analyze(file);
+                    displayResult(result);
+                } catch (error) {
+                    outputDiv.style.display = 'block';
+                    outputDiv.innerHTML = `<p class="error">Error: ${error}</p>`;
+                }
+            } else if (videoURLInput.value) {
+                try {
+                    const result = await videoDuration.analyze(videoURLInput.value);
+                    displayResult(result);
+                } catch (error) {
+                    outputDiv.style.display = 'block';
+                    outputDiv.innerHTML = `<p class="error">Error: ${error}</p>`;
+                }
+            } else {
+                outputDiv.style.display = 'block';
+                outputDiv.innerHTML = '<p class="error">Please select a local video file or enter a video URL.</p>';
+            }
+        });
+
+    </script>
+</body>
+
+</html>

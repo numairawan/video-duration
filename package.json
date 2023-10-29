@@ -1,0 +1,31 @@
+{
+  "name": "@numairawan/video-duration",
+  "version": "1.0.0",
+  "description": "Get video duration from any url and video object in nodejs and browser.",
+  "main": "src/main.js",
+  "directories": {
+    "example": "example",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numairawan/video-duration.git"
+  },
+  "keywords": [
+    "Video",
+    "info"
+  ],
+  "author": "Numair Awan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numairawan/video-duration/issues"
+  },
+  "homepage": "https://github.com/numairawan/video-duration#readme",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "mime-types": "^2.1.35"
+  }
+}
